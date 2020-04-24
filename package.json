@@ -1,0 +1,19 @@
+{
+  "name": "x-editor",
+  "version": "0.1.0",
+  "description": "X-Editor",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "keywords": [
+    "X-Editor",
+    "Electron"
+  ],
+  "author": "mathew@techversantinfo.com",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^8.2.3"
+  }
+}
