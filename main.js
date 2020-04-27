@@ -1,4 +1,8 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const menu = require('./components/Menu');
+const fs = require('fs');
+const path = require('path');
+const {  WRITE_NEW_FILE_NEEDED, NEW_FILE_WRITTEN } = require(path.resolve('actions/types'));
 
 function createWindow () {
   // Create the browser window.
@@ -8,10 +12,30 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: true
     }
-  })
+  });
 
   // and load the index.html of the app.
-  win.loadFile('index.html')
+  win.loadFile('./static/index.html');
+
+  // Set Menu
+  Menu.setApplicationMenu(menu(win));
+
+  // Turn on developer tools window
+  devtools = new BrowserWindow()
+  win.webContents.setDevToolsWebContents(devtools.webContents)
+  win.webContents.openDevTools({mode: 'detach'})
+  win.webContents.once('did-finish-load', function () {   
+        let windowBounds = win.getBounds();  
+        devtools.setPosition(windowBounds.x + windowBounds.width, windowBounds.y);
+    });
+
+  // create the file and then send a message back:
+  ipcMain.on(WRITE_NEW_FILE_NEEDED, (event, {dir}) => {
+      fs.writeFile(dir, `Start editing ${dir}`, function(err){
+          if(err){ return console.log('error is writing new file') }
+          win.webContents.send(NEW_FILE_WRITTEN, `Start editing ${dir}`)
+      });
+  })
   
 }
 
