@@ -21,13 +21,13 @@ function createWindow () {
   Menu.setApplicationMenu(menu(win));
 
   // Turn on developer tools window
-  devtools = new BrowserWindow()
-  win.webContents.setDevToolsWebContents(devtools.webContents)
-  win.webContents.openDevTools({mode: 'detach'})
-  win.webContents.once('did-finish-load', function () {   
-        let windowBounds = win.getBounds();  
-        devtools.setPosition(windowBounds.x + windowBounds.width, windowBounds.y);
-    });
+  // devtools = new BrowserWindow()
+  // win.webContents.setDevToolsWebContents(devtools.webContents)
+  // win.webContents.openDevTools({mode: 'detach'})
+  // win.webContents.once('did-finish-load', function () {   
+  //       let windowBounds = win.getBounds();  
+  //       devtools.setPosition(windowBounds.x + windowBounds.width, windowBounds.y);
+  //   });
 
   // create the file and then send a message back:
   ipcMain.on(WRITE_NEW_FILE_NEEDED, (event, {dir}) => {

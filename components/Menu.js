@@ -10,23 +10,7 @@ ipcMain.on(SAVE_NEEDED, (event, content) => {
 module.exports = function(win){
     return Menu.buildFromTemplate([
         {
-            label: app.getName(),
-            submenu: [
-                { label: `Hello`, click: () => console.log("Hello world") }
-            ]
-        },
-        {
-            label: 'Edit',
-            submenu: [
-                {label: 'Undo', role: 'undo'  },
-                {label: 'Redo', role: 'redo'  },
-                {label: 'Cut', role: 'cut'  },
-                {label: 'Copy', role: 'copy'  },
-                {label: 'Paste', role:'paste'  },
-            ]
-        },
-        {
-            label: 'Custom Menu', 
+            label: 'File', 
             submenu: [
                 {
                     label: 'New',
@@ -47,6 +31,22 @@ module.exports = function(win){
                     },
                     accelerator: 'cmd+S'
                 }
+            ]
+        },
+        {
+            label: 'Edit',
+            submenu: [
+                {label: 'Undo', role: 'undo'  },
+                {label: 'Redo', role: 'redo'  },
+                {label: 'Cut', role: 'cut'  },
+                {label: 'Copy', role: 'copy'  },
+                {label: 'Paste', role:'paste'  },
+            ]
+        },
+        {
+            label: app.getName(),
+            submenu: [
+                { label: `Hello`, click: () => console.log("Hello world") }
             ]
         }
 

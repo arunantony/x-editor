@@ -110,4 +110,20 @@ html {
   -moz-transition: opacity .25s ease-in-out;
   -webkit-transition: opacity .25s ease-in-out;
 }
+
+#customtitle_wrap {
+  -webkit-app-region: drag;
+  background: var(--sidebar-color);
+  border-top: var(--border-color) 1px solid;
+  text-align: center;
+}
+
+#customtitle_wrap h1 {
+  color: var(--sidebar-text);
+  font-family: 'Gochi Hand', cursive;
+  padding: 5px 0;
+  font-size: 1.5rem;
+  font-weight: normal;
+  text-transform: uppercase;
+}
 /*# sourceMappingURL=main.css.map */
