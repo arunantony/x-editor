@@ -2,7 +2,7 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const menu = require('./components/Menu');
 const fs = require('fs');
 const path = require('path');
-const {  WRITE_NEW_FILE_NEEDED, NEW_FILE_WRITTEN } = require(path.resolve('actions/types'));
+const {  WRITE_NEW_FILE_NEEDED, NEW_FILE_WRITTEN } = require('./actions/types');
 
 function createWindow () {
   // Create the browser window.
@@ -32,7 +32,7 @@ function createWindow () {
   // create the file and then send a message back:
   ipcMain.on(WRITE_NEW_FILE_NEEDED, (event, {dir}) => {
       fs.writeFile(dir, `Start editing ${dir}`, function(err){
-          if(err){ return console.log('error is writing new file') }
+          if(err){ return console.log('error in writing new file', err) }
           win.webContents.send(NEW_FILE_WRITTEN, `Start editing ${dir}`)
       });
   })

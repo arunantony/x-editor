@@ -1,12 +1,18 @@
 
 (function(){
-    const fs = require('fs')
-    const path = require('path')
-    const { readTitles, handleNewFile } = require(path.resolve('actions/uiActions'))
-    const { ipcRenderer } = require('electron'); 
-    const { NEW_DOCUMENT_NEEDED, WRITE_NEW_FILE_NEEDED, NEW_FILE_WRITTEN, SAVE_NEEDED, SAVED } = require(path.resolve('actions/types'));
+    // function which returns true or false to recognize a development environment
+    const isDev = () => process.env.NODE_ENV === 'development';
 
-    readTitles('data').map(({title, dir}) => {
+    // either use the development path OR the production prefix to file location
+    const directory = isDev() ? process.cwd().concat('/') : 'resources/app/';
+
+    const fs = require('fs');
+    const path = require('path');
+    const { readTitles, handleNewFile } = require(path.resolve(directory,'actions/uiActions'));
+    const { ipcRenderer } = require('electron'); 
+    const { NEW_DOCUMENT_NEEDED, WRITE_NEW_FILE_NEEDED, NEW_FILE_WRITTEN, SAVE_NEEDED, SAVED } = require(path.resolve(directory,'actions/types'));
+
+    readTitles(`${directory}data`).map(({title, dir}) => {
         el = document.createElement("li");
         text = document.createTextNode(`${title.split('.md')[0]}`);
         el.appendChild(text)
@@ -31,11 +37,11 @@
             let fileName = e.target[0].value
 
             ipcRenderer.send(WRITE_NEW_FILE_NEEDED, {
-                dir: `./data/${fileName}.md`
+                dir: `${directory}data/${fileName}.md`
             })
             
             ipcRenderer.on(NEW_FILE_WRITTEN, function (event, message) {
-                handleNewFile(e, `./data/${fileName}.md`, message)
+                handleNewFile(e, `${directory}data/${fileName}.md`, message)
             });
         })
     })
